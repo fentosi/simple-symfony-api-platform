@@ -9,9 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  */
-class Item
+class Order
 {
     /**
      * @ORM\Id()
@@ -21,17 +21,17 @@ class Item
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
-    private $name;
+    private $OrderTotal;
 
     /**
-     * @ORM\Column(type="decimal", precision=2, scale=0)
+     * @ORM\Column(type="datetime")
      */
-    private $price;
+    private $CreatedDateTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="ItemID")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="OrderID", orphanRemoval=true)
      */
     private $orderItems;
 
@@ -45,26 +45,26 @@ class Item
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getOrderTotal()
     {
-        return $this->name;
+        return $this->OrderTotal;
     }
 
-    public function setName(string $name): self
+    public function setOrderTotal($OrderTotal): self
     {
-        $this->name = $name;
+        $this->OrderTotal = $OrderTotal;
 
         return $this;
     }
 
-    public function getPrice()
+    public function getCreatedDateTime(): ?\DateTimeInterface
     {
-        return $this->price;
+        return $this->CreatedDateTime;
     }
 
-    public function setPrice($price): self
+    public function setCreatedDateTime(\DateTimeInterface $CreatedDateTime): self
     {
-        $this->price = $price;
+        $this->CreatedDateTime = $CreatedDateTime;
 
         return $this;
     }
@@ -81,7 +81,7 @@ class Item
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems[] = $orderItem;
-            $orderItem->setItemID($this);
+            $orderItem->setOrderID($this);
         }
 
         return $this;
@@ -92,8 +92,8 @@ class Item
         if ($this->orderItems->contains($orderItem)) {
             $this->orderItems->removeElement($orderItem);
             // set the owning side to null (unless already changed)
-            if ($orderItem->getItemID() === $this) {
-                $orderItem->setItemID(null);
+            if ($orderItem->getOrderID() === $this) {
+                $orderItem->setOrderID(null);
             }
         }
 
