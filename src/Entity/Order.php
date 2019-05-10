@@ -3,14 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @Table("`order`")
  */
+
 class Order
 {
     /**
@@ -57,12 +61,12 @@ class Order
         return $this;
     }
 
-    public function getCreatedDateTime(): ?\DateTimeInterface
+    public function getCreatedDateTime(): ?DateTimeInterface
     {
         return $this->CreatedDateTime;
     }
 
-    public function setCreatedDateTime(\DateTimeInterface $CreatedDateTime): self
+    public function setCreatedDateTime(DateTimeInterface $CreatedDateTime): self
     {
         $this->CreatedDateTime = $CreatedDateTime;
 
@@ -81,7 +85,7 @@ class Order
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems[] = $orderItem;
-            $orderItem->setOrderID($this);
+            $orderItem->setOrder($this);
         }
 
         return $this;
@@ -92,8 +96,8 @@ class Order
         if ($this->orderItems->contains($orderItem)) {
             $this->orderItems->removeElement($orderItem);
             // set the owning side to null (unless already changed)
-            if ($orderItem->getOrderID() === $this) {
-                $orderItem->setOrderID(null);
+            if ($orderItem->getOrder() === $this) {
+                $orderItem->setOrder(null);
             }
         }
 

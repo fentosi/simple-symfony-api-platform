@@ -81,7 +81,7 @@ class Item
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems[] = $orderItem;
-            $orderItem->setItemID($this);
+            $orderItem->setItem($this);
         }
 
         return $this;
@@ -92,8 +92,8 @@ class Item
         if ($this->orderItems->contains($orderItem)) {
             $this->orderItems->removeElement($orderItem);
             // set the owning side to null (unless already changed)
-            if ($orderItem->getItemID() === $this) {
-                $orderItem->setItemID(null);
+            if ($orderItem->getItem() === $this) {
+                $orderItem->setItem(null);
             }
         }
 

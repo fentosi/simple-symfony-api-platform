@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,13 +23,13 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItems")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $OrderID;
+    private $Order;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item", inversedBy="orderItems")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ItemID;
+    private $Item;
 
     /**
      * @ORM\Column(type="integer")
@@ -50,26 +51,26 @@ class OrderItem
         return $this->id;
     }
 
-    public function getOrderID(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->OrderID;
+        return $this->Order;
     }
 
-    public function setOrderID(?Order $OrderID): self
+    public function setOrder(?Order $Order): self
     {
-        $this->OrderID = $OrderID;
+        $this->Order = $Order;
 
         return $this;
     }
 
-    public function getItemID(): ?Item
+    public function getItem(): ?Item
     {
-        return $this->ItemID;
+        return $this->Item;
     }
 
-    public function setItemID(?Item $ItemID): self
+    public function setItem(?Item $Item): self
     {
-        $this->ItemID = $ItemID;
+        $this->Item = $Item;
 
         return $this;
     }
@@ -98,12 +99,12 @@ class OrderItem
         return $this;
     }
 
-    public function getCreatedDateTime(): ?\DateTimeInterface
+    public function getCreatedDateTime(): ?DateTimeInterface
     {
         return $this->CreatedDateTime;
     }
 
-    public function setCreatedDateTime(\DateTimeInterface $CreatedDateTime): self
+    public function setCreatedDateTime(DateTimeInterface $CreatedDateTime): self
     {
         $this->CreatedDateTime = $CreatedDateTime;
 
