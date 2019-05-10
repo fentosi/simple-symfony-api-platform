@@ -9,6 +9,12 @@ clear:
 	rm -rf var/cache/*
 	rm -rf var/logs/*
 
+db:
+    $(PHP) bin/console doctrine:database:drop --force
+    $(PHP) bin/console doctrine:database:create
+    $(PHP) bin/console doctrine:schema:update --force
+    $(PHP) bin/console doctrine:fixtures:load -n
+
 sf-clear:
 	@echo "Symfony cache clear"
 	$(PHP) bin/console cache:clear
