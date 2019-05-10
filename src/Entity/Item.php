@@ -31,7 +31,7 @@ class Item
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="ItemID")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="Item")
      */
     private $orderItems;
 

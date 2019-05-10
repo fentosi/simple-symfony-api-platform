@@ -35,7 +35,7 @@ class Order
     private $CreatedDateTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="OrderID", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="Order", orphanRemoval=true)
      */
     private $orderItems;
 
